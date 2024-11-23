@@ -1,0 +1,192 @@
+import matplotlib.pyplot as plt
+import numpy as np
+   # Data provided
+points = [
+{ "id": "1", "x": 0, "y": 0, "ES": 0, "EF": 7, "LS": 7, "LF": 0, "pr": "", "name": "Earthworks", "du": "7" },
+{ "id": "2", "x": 20, "y": 0, "ES": 7, "EF": 23, "LS": 23, "LF": 7, "pr": "1", "name": "Construction 0", "du": "16" },
+{ "id": "3", "x": 30, "y": -10, "ES": 23, "EF": 40, "LS": 40, "LF": 23, "pr": "2", "name": "Construction 1", "du": "17" },
+{ "id": "4", "x": 40, "y": -20, "ES": 40, "EF": 57, "LS": 57, "LF": 40, "pr": "3", "name": "Construction 2", "du": "17" },
+{ "id": "5", "x": 50, "y": -30, "ES": 57, "EF": 74, "LS": 74, "LF": 57, "pr": "4", "name": "Construction 3", "du": "17" },
+{ "id": "6", "x": 60, "y": -40, "ES": 74, "EF": 91, "LS": 91, "LF": 74, "pr": "5", "name": "Construction 4", "du": "17" },
+{ "id": "7", "x": 70, "y": -50, "ES": 91, "EF": 108, "LS": 108, "LF": 91, "pr": "6", "name": "Construction 5", "du": "17" },
+{ "id": "8", "x": 80, "y": -60, "ES": 108, "EF": 125, "LS": 125, "LF": 108, "pr": "7", "name": "Construction 6", "du": "17" },
+{ "id": "9", "x": 90, "y": -70, "ES": 125, "EF": 142, "LS": 142, "LF": 125, "pr": "8", "name": "Construction 7", "du": "17" },
+{ "id": "10", "x": 50, "y": -5, "ES": 142, "EF": 148, "LS": 148, "LF": 142, "pr": "9", "name": "Roof construction", "du": "6" },
+{ "id": "11", "x": 40, "y": -10, "ES": 40, "EF": 45, "LS": 148, "LF": 143, "pr": "3", "name": "1 installations", "du": "5" },
+{ "id": "12", "x": 50, "y": -10, "ES": 148, "EF": 151, "LS": 151, "LF": 148, "pr": "11,10", "name": "1 Screed", "du": "3" },
+{ "id": "13", "x": 60, "y": -10, "ES": 151, "EF": 166, "LS": 166, "LF": 151, "pr": "12", "name": "1 Bricks", "du": "15" },
+{ "id": "14", "x": 70, "y": -10, "ES": 166, "EF": 178, "LS": 178, "LF": 166, "pr": "13", "name": "1 Plaster", "du": "12" },
+{ "id": "15", "x": 80, "y": -10, "ES": 178, "EF": 180, "LS": 180, "LF": 178, "pr": "14", "name": "1 coating", "du": "2" },
+{ "id": "16", "x": 90, "y": -10, "ES": 180, "EF": 185, "LS": 185, "LF": 180, "pr": "15", "name": "1 latex", "du": "5" },
+{ "id": "17", "x": 100, "y": -10, "ES": 185, "EF": 220, "LS": 220, "LF": 185, "pr": "16", "name": "1 gypsum", "du": "35" },
+{ "id": "18", "x": 110, "y": -10, "ES": 220, "EF": 231, "LS": 375, "LF": 364, "pr": "17", "name": "1 tiles", "du": "11" },
+{ "id": "19", "x": 120, "y": -10, "ES": 231, "EF": 242, "LS": 386, "LF": 375, "pr": "18", "name": "1 doors and windows", "du": "11" },
+{ "id": "20", "x": 50, "y": -20, "ES": 57, "EF": 62, "LS": 183, "LF": 178, "pr": "4,11", "name": "2installations", "du": "5" },
+{ "id": "21", "x": 60, "y": -20, "ES": 151, "EF": 154, "LS": 186, "LF": 183, "pr": "20,12", "name": "2Screed", "du": "3" },
+{ "id": "22", "x": 70, "y": -20, "ES": 166, "EF": 181, "LS": 201, "LF": 186, "pr": "21,13", "name": "2Bricks", "du": "15" },
+{ "id": "23", "x": 80, "y": -20, "ES": 181, "EF": 193, "LS": 213, "LF": 201, "pr": "22,14", "name": "2Plaster", "du": "12" },
+{ "id": "24", "x": 90, "y": -20, "ES": 193, "EF": 195, "LS": 215, "LF": 213, "pr": "23,15", "name": "2coating", "du": "2" },
+{ "id": "25", "x": 100, "y": -20, "ES": 195, "EF": 200, "LS": 220, "LF": 215, "pr": "24,16", "name": "2latex", "du": "5" },
+{ "id": "26", "x": 110, "y": -20, "ES": 220, "EF": 255, "LS": 255, "LF": 220, "pr": "25,17", "name": "2gypsum", "du": "35" },
+{ "id": "27", "x": 120, "y": -20, "ES": 255, "EF": 266, "LS": 386, "LF": 375, "pr": "26,18", "name": "2tiles", "du": "11" },
+{ "id": "28", "x": 130, "y": -20, "ES": 266, "EF": 277, "LS": 397, "LF": 386, "pr": "27,19", "name": "2doors and windows", "du": "11" },
+{ "id": "29", "x": 60, "y": -30, "ES": 74, "EF": 79, "LS": 218, "LF": 213, "pr": "5,20", "name": "3 installations", "du": "5" },
+{ "id": "30", "x": 70, "y": -30, "ES": 154, "EF": 157, "LS": 221, "LF": 218, "pr": "29,21", "name": "3 Screed", "du": "3" },
+{ "id": "31", "x": 80, "y": -30, "ES": 181, "EF": 196, "LS": 236, "LF": 221, "pr": "30,22", "name": "3 Bricks", "du": "15" },
+{ "id": "32", "x": 90, "y": -30, "ES": 196, "EF": 208, "LS": 248, "LF": 236, "pr": "31,23", "name": "3 Plaster", "du": "12" },
+{ "id": "33", "x": 100, "y": -30, "ES": 208, "EF": 210, "LS": 250, "LF": 248, "pr": "32,24", "name": "3 coating", "du": "2" },
+{ "id": "34", "x": 110, "y": -30, "ES": 210, "EF": 215, "LS": 255, "LF": 250, "pr": "33,25", "name": "3 latex", "du": "5" },
+{ "id": "35", "x": 120, "y": -30, "ES": 255, "EF": 290, "LS": 290, "LF": 255, "pr": "34,26", "name": "3 gypsum", "du": "35" },
+{ "id": "36", "x": 130, "y": -30, "ES": 290, "EF": 301, "LS": 397, "LF": 386, "pr": "35,27", "name": "3 tiles", "du": "11" },
+{ "id": "37", "x": 140, "y": -30, "ES": 301, "EF": 312, "LS": 408, "LF": 397, "pr": "36,28", "name": "3 doors and windows", "du": "11" },
+{ "id": "38", "x": 70, "y": -40, "ES": 91, "EF": 96, "LS": 253, "LF": 248, "pr": "6,29", "name": "4 installations", "du": "5" },
+{ "id": "39", "x": 80, "y": -40, "ES": 157, "EF": 160, "LS": 256, "LF": 253, "pr": "38,30", "name": "4 Screed", "du": "3" },
+{ "id": "40", "x": 90, "y": -40, "ES": 196, "EF": 211, "LS": 271, "LF": 256, "pr": "39,31", "name": "4 Bricks", "du": "15" },
+{ "id": "41", "x": 100, "y": -40, "ES": 211, "EF": 223, "LS": 283, "LF": 271, "pr": "40,32", "name": "4 Plaster", "du": "12" },
+{ "id": "42", "x": 110, "y": -40, "ES": 223, "EF": 225, "LS": 285, "LF": 283, "pr": "41,33", "name": "4 coating", "du": "2" },
+{ "id": "43", "x": 120, "y": -40, "ES": 225, "EF": 230, "LS": 290, "LF": 285, "pr": "42,34", "name": "4 latex", "du": "5" },
+{ "id": "44", "x": 130, "y": -40, "ES": 290, "EF": 325, "LS": 325, "LF": 290, "pr": "43,35", "name": "4 gypsum", "du": "35" },
+{ "id": "45", "x": 140, "y": -40, "ES": 325, "EF": 336, "LS": 408, "LF": 397, "pr": "44,36", "name": "4 tiles", "du": "11" },
+{ "id": "46", "x": 150, "y": -40, "ES": 336, "EF": 347, "LS": 419, "LF": 408, "pr": "45,37", "name": "4 doors and windows", "du": "11" },
+{ "id": "47", "x": 80, "y": -50, "ES": 108, "EF": 113, "LS": 288, "LF": 283, "pr": "7,38", "name": "5 installations", "du": "5" },
+{ "id": "48", "x": 90, "y": -50, "ES": 160, "EF": 163, "LS": 291, "LF": 288, "pr": "47,39", "name": "5 Screed", "du": "3" },
+{ "id": "49", "x": 100, "y": -50, "ES": 211, "EF": 226, "LS": 306, "LF": 291, "pr": "48,40", "name": "5 Bricks", "du": "15" },
+{ "id": "50", "x": 110, "y": -50, "ES": 226, "EF": 238, "LS": 318, "LF": 306, "pr": "49,41", "name": "5 Plaster", "du": "12" },
+{ "id": "51", "x": 120, "y": -50, "ES": 238, "EF": 240, "LS": 320, "LF": 318, "pr": "50,42", "name": "5 coating", "du": "2" },
+{ "id": "52", "x": 130, "y": -50, "ES": 240, "EF": 245, "LS": 325, "LF": 320, "pr": "51,43", "name": "5 latex", "du": "5" },
+{ "id": "53", "x": 140, "y": -50, "ES": 325, "EF": 360, "LS": 360, "LF": 325, "pr": "52,44", "name": "5 gypsum", "du": "35" },
+{ "id": "54", "x": 150, "y": -50, "ES": 360, "EF": 371, "LS": 419, "LF": 408, "pr": "53,45", "name": "5 tiles", "du": "11" },
+{ "id": "55", "x": 160, "y": -50, "ES": 371, "EF": 382, "LS": 430, "LF": 419, "pr": "54,46", "name": "5 doors and windows", "du": "11" },
+{ "id": "56", "x": 90, "y": -60, "ES": 125, "EF": 130, "LS": 323, "LF": 318, "pr": "8,47", "name": "6 installations", "du": "5" },
+{ "id": "57", "x": 100, "y": -60, "ES": 163, "EF": 166, "LS": 326, "LF": 323, "pr": "56,48", "name": "6 Screed", "du": "3" },
+{ "id": "58", "x": 110, "y": -60, "ES": 226, "EF": 241, "LS": 341, "LF": 326, "pr": "57,49", "name": "6 Bricks", "du": "15" },
+{ "id": "59", "x": 120, "y": -60, "ES": 241, "EF": 253, "LS": 353, "LF": 341, "pr": "58,50", "name": "6 Plaster", "du": "12" },
+{ "id": "60", "x": 130, "y": -60, "ES": 253, "EF": 255, "LS": 355, "LF": 353, "pr": "59,51", "name": "6 coating", "du": "2" },
+{ "id": "61", "x": 140, "y": -60, "ES": 255, "EF": 260, "LS": 360, "LF": 355, "pr": "60,52", "name": "6 latex", "du": "5" },
+{ "id": "62", "x": 150, "y": -60, "ES": 360, "EF": 395, "LS": 395, "LF": 360, "pr": "61,53", "name": "6 gypsum", "du": "35" },
+{ "id": "63", "x": 160, "y": -60, "ES": 395, "EF": 406, "LS": 430, "LF": 419, "pr": "62,54", "name": "6 tiles", "du": "11" },
+{ "id": "64", "x": 170, "y": -60, "ES": 406, "EF": 417, "LS": 441, "LF": 430, "pr": "63,55", "name": "6 doors and windows", "du": "11" },
+{ "id": "65", "x": 100, "y": -70, "ES": 142, "EF": 147, "LS": 358, "LF": 353, "pr": "9,56", "name": "7installations", "du": "5" },
+{ "id": "66", "x": 110, "y": -70, "ES": 166, "EF": 169, "LS": 361, "LF": 358, "pr": "65,57", "name": "7Screed", "du": "3" },
+{ "id": "67", "x": 120, "y": -70, "ES": 241, "EF": 256, "LS": 376, "LF": 361, "pr": "66,58", "name": "7Bricks", "du": "15" },
+{ "id": "68", "x": 130, "y": -70, "ES": 256, "EF": 268, "LS": 388, "LF": 376, "pr": "67,59", "name": "7Plaster", "du": "12" },
+{ "id": "69", "x": 140, "y": -70, "ES": 268, "EF": 270, "LS": 390, "LF": 388, "pr": "68,60", "name": "7coating", "du": "2" },
+{ "id": "70", "x": 150, "y": -70, "ES": 270, "EF": 275, "LS": 395, "LF": 390, "pr": "69,61", "name": "7latex", "du": "5" },
+{ "id": "71", "x": 160, "y": -70, "ES": 395, "EF": 430, "LS": 430, "LF": 395, "pr": "70,62", "name": "7gypsum", "du": "35" },
+{ "id": "72", "x": 170, "y": -70, "ES": 430, "EF": 441, "LS": 441, "LF": 430, "pr": "71,63", "name": "7tiles", "du": "11" },
+{ "id": "73", "x": 180, "y": -70, "ES": 441, "EF": 452, "LS": 452, "LF": 441, "pr": "72,64", "name": "7doors and windows", "du": "11" },
+{ "id": "74", "x": 190, "y": -50, "ES": 452, "EF": 460, "LS": 460, "LF": 452, "pr": "73", "name": "Scaffolding", "du": "8" },
+{ "id": "75", "x": 200, "y": -50, "ES": 460, "EF": 511, "LS": 511, "LF": 460, "pr": "74", "name": "Insulation", "du": "51" },
+{ "id": "76", "x": 210, "y": -50, "ES": 511, "EF": 515, "LS": 515, "LF": 511, "pr": "75", "name": "Plaster", "du": "4" },
+{ "id": "77", "x": 220, "y": -50, "ES": 515, "EF": 519, "LS": 519, "LF": 515, "pr": "76", "name": "Outer lining", "du": "4" },
+{ "id": "78", "x": 230, "y": -50, "ES": 519, "EF": 524, "LS": 524, "LF": 519, "pr": "77", "name": "ELEVATOR", "du": "5" },
+{ "id": "79", "x": 240, "y": -50, "ES": 524, "EF": 525, "LS": 525, "LF": 524, "pr": "73,78", "name": "END", "du": "1" },
+
+
+]
+
+sorted_points = sorted(points, key=lambda p: int(p['id']))
+
+# Function to find a point by ID
+def find_point_by_id(point_id):
+    for point in sorted_points:
+        if point['id'] == point_id:
+            return point
+    return None
+
+# Start of the plotting code
+plt.figure(figsize=(60, 60))
+
+# First, draw all the arrows (before plotting the points)
+for point in sorted_points:
+    if "pr" in point and point["pr"]:
+        predecessors = point['pr'].split(',')
+        for pred_id in predecessors:
+            pred_point = find_point_by_id(pred_id.strip())
+            if pred_point:
+                mid_x = (pred_point['x'] + point['x']) / 2
+                mid_y = (pred_point['y'] + point['y']) / 2
+                plt.arrow(pred_point['x'], pred_point['y'], point['x'] - pred_point['x'], 
+                          point['y'] - pred_point['y'], head_width=0.8, head_length=1, fc='k', ec='k', 
+                          length_includes_head=True)
+                
+                # Offset the name and du values slightly above the line
+                plt.text(mid_x, mid_y + 0.8, f"{point['name']}, {point['du']}", fontsize=10, ha='center', color='blue')
+
+
+# Next, plot all the points in light blue color
+for point in sorted_points:
+    plt.scatter(point['x'], point['y'], s=3000, color='lightblue', zorder=3)
+    plt.plot([point['x'] - 1.35, point['x'] + 1.35], [point['y'] + 0.60, point['y'] - 0.60], color='black', zorder=4)
+    plt.plot([point['x'] - 1.35, point['x'] + 1.35], [point['y'] - 0.60, point['y'] + 0.60], color='black', zorder=4)
+    plt.text(point['x'] - 0.5, point['y'], str(point['ES']), fontsize=12, ha='right', zorder=5)
+    plt.text(point['x'] + 0.5, point['y'], str(point['EF']), fontsize=12, ha='left', zorder=5)
+    plt.text(point['x'], point['y'] - 0.4, str(point['LS']), fontsize=12, ha='center', va='top', zorder=5)
+    plt.text(point['x'], point['y'] + 0.4, str(point['LF']), fontsize=12, ha='center', va='bottom', zorder=5)
+
+# Adjust axis limits to encompass all points
+x_values = [p['x'] for p in points]
+y_values = [p['y'] for p in points]
+plt.xlim(min(x_values) - 10, max(x_values) + 10)
+plt.ylim(min(y_values) - 10, max(y_values) + 10)
+
+# Rest of your plotting setup
+plt.xlabel('X-axis', fontsize=25)
+plt.ylabel('Y-axis', fontsize=25)
+plt.title('Connected Points with Arrows, Names, and Task Durations', fontsize=30)
+plt.grid(True)
+plt.show()
+
+
+
+sorted_points = sorted(points, key=lambda p: int(p['id']))
+
+# Function to find a point by ID
+def find_point_by_id(point_id):
+    for point in sorted_points:
+        if point['id'] == point_id:
+            return point
+    return None
+
+# Start of the plotting code
+plt.figure(figsize=(60, 60))
+
+# First, draw all the arrows (before plotting the points)
+for point in sorted_points:
+    if "pr" in point and point["pr"]:
+        predecessors = point['pr'].split(',')
+        for pred_id in predecessors:
+            pred_point = find_point_by_id(pred_id.strip())
+            if pred_point:
+                mid_x = (pred_point['x'] + point['x']) / 2
+                mid_y = (pred_point['y'] + point['y']) / 2
+                plt.arrow(pred_point['x'], pred_point['y'], point['x'] - pred_point['x'], 
+                          point['y'] - pred_point['y'], head_width=0.8, head_length=1, fc='k', ec='k', 
+                          length_includes_head=True)
+                
+                # Offset the name and du values slightly above the line
+                plt.text(mid_x, mid_y + 0.8, f"{point['name']}, {point['du']}", fontsize=10, ha='center', color='blue')
+
+
+# Next, plot all the points in light blue color
+for point in sorted_points:
+    plt.scatter(point['x'], point['y'], s=3000, color='lightblue', zorder=3)
+    plt.plot([point['x'] - 1.35, point['x'] + 1.35], [point['y'] + 0.60, point['y'] - 0.60], color='black', zorder=4)
+    plt.plot([point['x'] - 1.35, point['x'] + 1.35], [point['y'] - 0.60, point['y'] + 0.60], color='black', zorder=4)
+    plt.text(point['x'] - 0.5, point['y'], str(point['ES']), fontsize=12, ha='right', zorder=5)
+    plt.text(point['x'] + 0.5, point['y'], str(point['EF']), fontsize=12, ha='left', zorder=5)
+    plt.text(point['x'], point['y'] - 0.4, str(point['LS']), fontsize=12, ha='center', va='top', zorder=5)
+    plt.text(point['x'], point['y'] + 0.4, str(point['LF']), fontsize=12, ha='center', va='bottom', zorder=5)
+
+# Adjust axis limits to encompass all points
+x_values = [p['x'] for p in points]
+y_values = [p['y'] for p in points]
+plt.xlim(min(x_values) - 10, max(x_values) + 10)
+plt.ylim(min(y_values) - 10, max(y_values) + 10)
+
+# Rest of your plotting setup
+plt.xlabel('X-axis', fontsize=25)
+plt.ylabel('Y-axis', fontsize=25)
+plt.title('Connected Points with Arrows, Names, and Task Durations', fontsize=30)
+plt.grid(True)
+plt.show()
